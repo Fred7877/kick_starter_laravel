@@ -1,0 +1,52 @@
+version: '3'
+services:
+    phpfpm:
+        container_name: '${APP_NAME}'
+        build:
+            args:
+                user: '${WWWUSER}'
+                uid: '${WWWGROUP}'
+            context: ./docker
+            dockerfile: Dockerfile
+        restart: always
+        working_dir: /var/www/html
+        volumes:
+            - ./:/var/www/html
+        networks:
+            - network
+    nginx:
+        image: nginx:latest
+        networks:
+            - network
+        depends_on:
+            - mariadb
+        ports:
+            - '${APP_PORT}:80'
+        volumes:
+            - ./docker/nginx/tkt.conf:/etc/nginx/conf.d/default.conf
+            - ./:/var/www/html
+        links:
+            - phpfpm
+    mariadb:
+        image: ${IMAGE_DB}
+        restart: always
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        volumes:
+            - 'mariadb_volume:/var/lib/mysql'
+        networks:
+            - network
+        healthcheck:
+            test: [ "CMD", "mysqladmin", "ping" ]
+networks:
+    network:
+        driver: bridge
+volumes:
+    mariadb_volume:
+        driver: local

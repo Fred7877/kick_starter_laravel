@@ -1,0 +1,19 @@
+.moveall,
+.removeall {
+    border: 1px solid #ccc !important;
+}
+
+.moveall::after {
+    content: attr(title);
+
+}
+
+.removeall::after {
+    content: attr(title);
+}
+
+.form-control option {
+    padding: 10px;
+    border-bottom: 1px solid #efefef;
+}
+
