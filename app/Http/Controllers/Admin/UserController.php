@@ -50,7 +50,7 @@ class UserController extends Controller
 
         $user->syncRoles($roles);
 
-        return redirect(route('users.edit', ['user' => $user]));
+        return redirect(route('users.edit', ['user' => $user]))->with('success', __('common.user_created_successfully'));
     }
 
     /**
@@ -85,13 +85,18 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $attributes = $request->validated();
+
         if ($request->get('password') === null) {
             $attributes = ['password' => $user->password] + $attributes;
         }
 
         $user->update($attributes);
 
-        return back();
+        $roles = $attributes['roles'];
+        unset($attributes['roles']);
+        $user->syncRoles($roles);
+
+        return back()->with('success', __('common.modification_saved'));
     }
 
     /**

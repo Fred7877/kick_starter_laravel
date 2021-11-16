@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/jquery.bootstrap-duallistbox.min.js": "/js/jquery.bootstrap-duallistbox.min.js",
+    "/js/sweet-alert-toast.js": "/js/sweet-alert-toast.js",
     "/css/app.css": "/css/app.css",
     "/css/style-dualbox.css": "/css/style-dualbox.css",
     "/css/bootstrap-duallistbox.min.css": "/css/bootstrap-duallistbox.min.css",

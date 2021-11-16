@@ -6,4 +6,6 @@ return [
     'new' => 'Nouveau',
     'choose_one_or_more_roles' => 'Choisir un rôle ou plusieurs rôles',
     'choose_permissions' => 'Choix des permissions',
+    'modification_saved' => 'Modification enregistrées',
+    'user_created_successfully' => 'Utilisateur crée avec succès',
 ];

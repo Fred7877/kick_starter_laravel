@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Roles;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -15,7 +16,7 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        User::firstOrCreate(
+        $admin = User::firstOrCreate(
             [
                 'firstname' => 'Admin',
                 'lastname' => 'Istrator',
@@ -26,5 +27,7 @@ class AdminSeeder extends Seeder
                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
                 'remember_token' => Str::random(10),
             ]);
+
+        $admin->assignRole(Roles::ADMIN_NAME);
     }
 }
