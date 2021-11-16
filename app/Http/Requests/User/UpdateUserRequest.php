@@ -28,6 +28,7 @@ class UpdateUserRequest extends FormRequest
             'lastname' => 'required|string',
             'email' => 'required|email',
             'password' => 'sometimes|confirmed',
+            'roles' => 'required',
         ];
     }
 }

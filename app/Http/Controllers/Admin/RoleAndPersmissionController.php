@@ -84,7 +84,7 @@ class RoleAndPersmissionController extends Controller
     {
         Role::findById($id)->syncPermissions($request->permissions);
 
-        return back();
+        return back()->with('success', __('common.modification_saved'));
     }
 
     /**

@@ -19,14 +19,24 @@ class RemoveBtn extends Component
     public function confirmed()
     {
         if ($this->modelIdToRemove === $this->modelId) {
-            $this->modelType::find($this->modelIdToRemove)->delete();
+            $user = $this->modelType::find($this->modelIdToRemove);
 
-            $this->alert('success', 'l\'utilisateur a bien été supprimé.', [
-                'position' => 'top-end',
-                'timer' => 3000,
-                'toast' => true,
-            ]);
+            if($user->isAdministrator()) {
+                $this->alert('error', 'Impossible de supprimer cet utilisateur.', [
+                    'position' => 'top-end',
+                    'timer' => 3000,
+                    'toast' => true,
+                ]);
 
+            } else {
+                $user->delete();
+
+                $this->alert('success', 'l\'utilisateur a bien été supprimé.', [
+                    'position' => 'top-end',
+                    'timer' => 3000,
+                    'toast' => true,
+                ]);
+            }
             $this->redirect($this->routeRedirect);
         }
     }

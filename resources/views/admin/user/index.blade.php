@@ -14,9 +14,7 @@
 @stop
 
 @push('js')
-    {{$dataTable->scripts()}}
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script>
     <x-livewire-alert::flash/>
+    {{$dataTable->scripts()}}
 @endpush

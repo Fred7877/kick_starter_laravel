@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/jquery.bootstrap-duallistbox.min.js', 'public/js')
+    .js('resources/js/sweet-alert-toast.js', 'public/js')
     .copy('resources/js/select2.min.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .postCss('resources/css/bootstrap-duallistbox.min.css', 'public/css')

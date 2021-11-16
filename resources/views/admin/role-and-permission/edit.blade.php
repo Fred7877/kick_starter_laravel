@@ -12,7 +12,7 @@
                 @method('PUT')
                 @csrf
 
-                <x-forms.input type="text" label="Nom" name="firstname" value="{{ old('name', $role->name) }}"/>
+                <x-forms.input type="text" label="Nom" name="name" value="{{ old('name', $role->name) }}"/>
 
                 <hr>
                 <h4>Permissions</h4>
@@ -32,6 +32,17 @@
                 <x-return-and-submit-btns redirectPath="{{ route('roles-and-permissions.index') }}"/>
             </form>
         </div>
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
     </div>
 @stop
 
