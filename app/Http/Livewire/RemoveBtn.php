@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 
@@ -13,25 +14,28 @@ class RemoveBtn extends Component
     public $modelIdToRemove;
     public $modelType;
     public $routeRedirect;
+    public $messageModalAsk;
+    public $messageModalSuccess;
+    public $messageModalError;
 
     protected $listeners = ['confirmed'];
 
     public function confirmed()
     {
         if ($this->modelIdToRemove === $this->modelId) {
-            $user = $this->modelType::find($this->modelIdToRemove);
+            $model = $this->modelType::find($this->modelIdToRemove);
 
-            if($user->isAdministrator()) {
-                $this->alert('error', 'Impossible de supprimer cet utilisateur.', [
+            if($this->checking($model)) {
+                $this->alert('error', $this->messageModalError, [
                     'position' => 'top-end',
                     'timer' => 3000,
                     'toast' => true,
                 ]);
 
             } else {
-                $user->delete();
+                $model->delete();
 
-                $this->alert('success', 'l\'utilisateur a bien été supprimé.', [
+                $this->alert('success', $this->messageModalSuccess, [
                     'position' => 'top-end',
                     'timer' => 3000,
                     'toast' => true,
@@ -41,11 +45,26 @@ class RemoveBtn extends Component
         }
     }
 
+    /**
+     * Rules for checking if the model could be remove.
+     *
+     * @param $model
+     * @return bool
+     */
+    private function checking($model)
+    {
+        if($model instanceof User) {
+            return $model->isAdministrator();
+        }
+
+        return User::role($model->name)->get()->isNotEmpty();
+    }
+
     public function remove($id)
     {
         $this->modelIdToRemove = $id;
 
-        $this->confirm('Voulez-vous supprimer cette utilisateur ?', [
+        $this->confirm($this->messageModalAsk, [
             'onConfirmed' => 'confirmed',
             'confirmButtonText' => 'Oui',
             'cancelButtonText' => 'Non',

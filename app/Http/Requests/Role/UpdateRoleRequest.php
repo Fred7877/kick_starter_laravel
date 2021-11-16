@@ -25,6 +25,7 @@ class UpdateRoleRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'permissions' => 'required',
         ];
     }
 }

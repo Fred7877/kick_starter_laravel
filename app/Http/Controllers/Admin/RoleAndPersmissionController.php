@@ -36,14 +36,15 @@ class RoleAndPersmissionController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Routing\Redirector
      */
     public function store(StoreRoleRequest $request)
     {
         $role = Role::firstOrCreate($request->validated());
         $role->syncPermissions($request->permissions);
 
-        return redirect(route('roles-and-permissions.edit', ['roles_and_permission' => $role]));
+        return redirect(route('roles-and-permissions.edit', ['roles_and_permission' => $role]))
+            ->with('success', __('common.role_created_successfully'));
     }
 
     /**
@@ -76,13 +77,19 @@ class RoleAndPersmissionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param UpdateRoleRequest $request
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateRoleRequest $request, $id)
     {
-        Role::findById($id)->syncPermissions($request->permissions);
+
+        $role = Role::findById($id);
+        $role->update([
+            'name' => $request->name
+        ]);
+
+        $role->syncPermissions($request->permissions);
 
         return back()->with('success', __('common.modification_saved'));
     }

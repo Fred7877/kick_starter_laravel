@@ -32,7 +32,10 @@ class UserDataTable extends DataTable
                 return view('layouts.datatable-actions-btn', [
                     'route' => route('users.edit', $model),
                     'modelId' => $model->id,
-                    'modelType' => get_class($model)
+                    'modelType' => get_class($model),
+                    'messageModalSuccess' => __('common.success_deleting_user'),
+                    'messageModalError' => __('common.error_deleting_user'),
+                    'messageModalAsk' => __('common.ask_remove_user'),
                 ]);
             });
     }

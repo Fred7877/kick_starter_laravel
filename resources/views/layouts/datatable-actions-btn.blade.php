@@ -6,7 +6,10 @@
         [
         'modelId' => $modelId,
         'modelType' => $modelType,
-        'routeRedirect' => route(Request::route()->getName())
+        'routeRedirect' => route(Request::route()->getName()),
+        'messageModalSuccess' => $messageModalSuccess,
+        'messageModalError' => $messageModalError,
+        'messageModalAsk' => $messageModalAsk,
     ],
     key($id))
 </div>

@@ -18,7 +18,7 @@ class RoleAndPermissionDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->editColumn('name', function($model) {
+            ->editColumn('name', function ($model) {
                 return view('admin.role-and-permission.parts.column-name', [
                     'name' => $model->name,
                     'permissions' => $model->getPermissionNames(),
@@ -28,7 +28,10 @@ class RoleAndPermissionDataTable extends DataTable
                 return view('layouts.datatable-actions-btn', [
                     'route' => route('roles-and-permissions.edit', $model->id),
                     'modelId' => $model->id,
-                    'modelType' => get_class($model)
+                    'modelType' => get_class($model),
+                    'messageModalSuccess' => __('common.success_deleting_role'),
+                    'messageModalError' => __('common.error_deleting_role'),
+                    'messageModalAsk' => __('common.ask_remove_role'),
                 ]);
             });
     }
@@ -57,7 +60,14 @@ class RoleAndPermissionDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom('Bfrtip')
-            ->orderBy(1);
+            ->orderBy(1)
+            ->parameters([ // this to refresh and activate actions in livewire components after drawing the table
+                'drawCallback' => 'function(settings) {
+                    if (window.livewire) {
+                        window.livewire.rescan();
+                    }
+                }',
+            ]);
     }
 
     /**
