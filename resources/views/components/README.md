@@ -2,6 +2,7 @@
 ## input
 ###### Attributes
 - type: text, file, hidden, email, password, etc...
+- id: Id of the field
 - label: Label of the field  
 - name: Name of the field  
 - value: value of the field   
@@ -16,6 +17,7 @@
 ## Select
 ###### Attributes
 - options: Options of the select  
+- id: Id of the field
 - label: Label of the select  
 - name: name of the select
 - id: name of the select
@@ -38,3 +40,13 @@
 - isSelect2: show a select2 selection,
 - size: 10 by default,  indicates the number of lines that should be visible on the screen at the same time
 
+## TextArea
+###### Attributes  
+- label: Label of the field
+- id: Id of the field
+- name: Name of the field
+- value: value of the field
+- class: class of the field, form-control by default.
+- addClass: Allow add classes to the field
+- addGroupClass: Allow add classes to the group fields, see the configuration file components.sizing-form.  
+- => slot : Content of the textarea

@@ -46,7 +46,7 @@ class Select extends AbstractForm
         $removeAllLabel = null,
         $isDualList = false,
         $comparingModel = null,
-        $multiple = true,
+        $multiple = false,
         $isSelect2 = false,
         $size = 10,
         $placeholder = null,
@@ -79,7 +79,7 @@ class Select extends AbstractForm
         $this->size = $size;
         $this->placeholder = $placeholder;
 
-        if($isDualList) {
+        if($this->isDualList) {
             $this->isInputGroup = false;
             $this->size = $size === 10 ? 200 : $size;
         }

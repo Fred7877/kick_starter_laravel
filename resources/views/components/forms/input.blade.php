@@ -37,7 +37,7 @@
                class="{{ $class }} {{ $addClass }}
                @error($name) is-invalid @enderror" id="{{ $id }}"
                placeholder="{{ $placeholder }}"
-               value="{{$value}}">
+               value="{{ $value }}">
 
         @error($name)
         <div class="invalid-feedback d-block">
