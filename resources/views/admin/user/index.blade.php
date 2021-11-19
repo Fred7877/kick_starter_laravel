@@ -17,4 +17,4 @@
     <script src="{{ asset('vendor/livewire-alert/livewire-alert.js') }}"></script>
     <x-livewire-alert::flash/>
     {{$dataTable->scripts()}}
-@endpush
+@endpush"

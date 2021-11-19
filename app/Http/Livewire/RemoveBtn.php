@@ -18,30 +18,19 @@ class RemoveBtn extends Component
     public $messageModalSuccess;
     public $messageModalError;
 
-    protected $listeners = ['confirmed'];
+    protected $listeners = ['confirmed','remove'];
 
-    public function confirmed()
+    public function confirmed($data)
     {
-        if ($this->modelIdToRemove === $this->modelId) {
+        if ($this->modelIdToRemove !== null) {
             $model = $this->modelType::find($this->modelIdToRemove);
+            $model->delete();
 
-            if($this->checking($model)) {
-                $this->alert('error', $this->messageModalError, [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                ]);
-
-            } else {
-                $model->delete();
-
-                $this->alert('success', $this->messageModalSuccess, [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                ]);
-            }
-            $this->redirect($this->routeRedirect);
+            $this->flash('success', $this->messageModalSuccess, [
+                'position' => 'top-end',
+                'timer' => 3000,
+                'toast' => true,
+            ], $this->routeRedirect);
         }
     }
 
@@ -53,18 +42,18 @@ class RemoveBtn extends Component
      */
     private function checking($model)
     {
-        if($model instanceof User) {
+        if ($model instanceof User) {
             return $model->isAdministrator();
         }
 
         return User::role($model->name)->get()->isNotEmpty();
     }
 
-    public function remove($id)
+    public function remove()
     {
-        $this->modelIdToRemove = $id;
+       $this->modelIdToRemove = $this->modelId;
 
-        $this->confirm($this->messageModalAsk, [
+       $this->confirm($this->messageModalAsk, [
             'onConfirmed' => 'confirmed',
             'confirmButtonText' => 'Oui',
             'cancelButtonText' => 'Non',

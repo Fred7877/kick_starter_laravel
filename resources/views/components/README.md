@@ -12,6 +12,7 @@
 - class: class of the field, form-control by default.  
 - addClass: Allow add classes to the field  
 - addGroupClass: Allow add classes to the group fields, see the configuration file components.sizing-form.  
+- wiremodel: Add a wire:model attribut to the input
 
 ## Select
 ###### Attributes

@@ -23,6 +23,12 @@ class Input extends AbstractForm
      *
      * @var string
      */
+    public $wiremodel;
+
+    /**
+     *
+     * @var string
+     */
     public $addGroupClass;
 
     public function __construct(
@@ -37,7 +43,8 @@ class Input extends AbstractForm
         $isAppend = false,
         $class = 'form-control',
         $addClass = '',
-        $addGroupClass = ''
+        $addGroupClass = '',
+        $wiremodel = null
     )
     {
         parent::__construct(
@@ -54,6 +61,9 @@ class Input extends AbstractForm
             $addClass,
             $addGroupClass
         );
+
+
+        $this->wiremodel = $wiremodel;
     }
 
     /**

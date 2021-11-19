@@ -20,7 +20,8 @@ class UserController extends Controller
      */
     public function index(UserDataTable $dataTable)
     {
-        return $dataTable->render('admin.user.index');
+        $users = User::all();
+        return $dataTable->render('admin.user.index', ['users' => $users]);
     }
 
     /**
