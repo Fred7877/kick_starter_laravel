@@ -11,37 +11,22 @@ class RemoveBtn extends Component
     use LivewireAlert;
 
     public $modelId;
-    public $modelIdToRemove;
     public $modelType;
     public $routeRedirect;
     public $messageModalAsk;
     public $messageModalSuccess;
     public $messageModalError;
 
-    protected $listeners = ['confirmed'];
+    protected $listeners = ['remove', 'confirmed'];
 
     public function confirmed()
     {
-        if ($this->modelIdToRemove === $this->modelId) {
-            $model = $this->modelType::find($this->modelIdToRemove);
-
-            if($this->checking($model)) {
-                $this->alert('error', $this->messageModalError, [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                ]);
-
-            } else {
-                $model->delete();
-
-                $this->alert('success', $this->messageModalSuccess, [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                ]);
-            }
-            $this->redirect($this->routeRedirect);
+        $model = $this->modelType::find($this->modelId);
+        if($this->checking($model)) {
+            $model->delete();
+            $this->flash('success', $this->messageModalSuccess, [], $this->routeRedirect);
+        } else {
+            $this->flash('error', $this->messageModalError, [], $this->routeRedirect);
         }
     }
 
@@ -54,18 +39,19 @@ class RemoveBtn extends Component
     private function checking($model)
     {
         if($model instanceof User) {
-            return $model->isAdministrator();
+            return !$model->isAdministrator();
         }
 
-        return User::role($model->name)->get()->isNotEmpty();
+        return User::role($model->name)->get()->isEmpty();
     }
 
-    public function remove($id)
+    public function remove()
     {
-        $this->modelIdToRemove = $id;
-
         $this->confirm($this->messageModalAsk, [
-            'onConfirmed' => 'confirmed',
+            'onConfirmed' => [
+                'component' => 'self',
+                'listener' => 'confirmed'
+            ],
             'confirmButtonText' => 'Oui',
             'cancelButtonText' => 'Non',
         ]);

@@ -26,6 +26,7 @@
 
                 <x-forms.select
                     name="roles"
+                    multiple="true"
                     :options="$roles"
                     :comparingModel="$user"
                     isDualList="true"

@@ -19,6 +19,7 @@
 
                 <x-forms.select
                     name="permissions"
+                    multiple="true"
                     :options="$permissions"
                     label="permissions"
                     isSelect2="true"
