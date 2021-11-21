@@ -1,0 +1,22 @@
+@extends('layouts.admin')
+
+@section('content_header')
+    <h1>{{ __('common.edition') }}</h1>
+@stop
+
+@section('content_admin')
+    <div class="card">
+        <div class="card-body">
+            <form action="{{ route('$CLASS_NAME_PLURAL$.update', ['$CLASS_NAME$' => $$CLASS_NAME$]) }}" method="POST">
+                 @method('PUT')
+                 @csrf
+                 $CONTENT$
+                <x-return-and-submit-btns redirectPath="{{ route('$CLASS_NAME_PLURAL$.index') }}"></x-return-and-submit-btns>
+            </form>
+        </div>
+    </div>
+@stop
+
+@push('js')
+
+@endpush

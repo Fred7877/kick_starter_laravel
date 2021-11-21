@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
 @section('content_header')
-    <h1>Utilisateurs</h1>
+    <h1>$CLASS_NAME$</h1>
 @stop
 
 @section('content_admin')
     <div class="card">
         <div class="card-body">
-            <x-new-btn route="{{ route('users.create') }}"></x-new-btn>
+            <x-new-btn route="{{ route('$CLASS_NAME_PLURAL$.create') }}"/></x-new-btn>
             {{$dataTable->table()}}
         </div>
     </div>
