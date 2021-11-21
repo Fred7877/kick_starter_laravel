@@ -48,10 +48,7 @@ class RemoveBtn extends Component
     public function remove()
     {
         $this->confirm($this->messageModalAsk, [
-            'onConfirmed' => [
-                'component' => 'self',
-                'listener' => 'confirmed'
-            ],
+            'onConfirmed' => 'confirmed',
             'confirmButtonText' => 'Oui',
             'cancelButtonText' => 'Non',
         ]);
