@@ -1,6 +1,6 @@
 <div class="btn-group " role="group" aria-label="Basic example">
     <a href="{{ $route }}">
-        <i class="fas fa-edit mr-2"></i>
+        <i class="{{ config()->get('kick-starter.styles.actions.edit') }}"></i>
     </a>
     @livewire('remove-btn',
         [

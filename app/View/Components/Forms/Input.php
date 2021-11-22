@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Config;
 
 class Input extends AbstractForm
 {
-
     /**
      *
      * @var string
@@ -32,12 +31,15 @@ class Input extends AbstractForm
         $type = 'text',
         $value = '',
         $placeholder = '',
-        $isInputGroup = true,
-        $isPrepend = true,
-        $isAppend = false,
-        $class = 'form-control',
+        $isInputGroup = null,
+        $isPrepend = null,
+        $isAppend = null,
+        $class = '',
         $addClass = '',
-        $addGroupClass = ''
+        $addGroupClass = '',
+        $row = null,
+        $classLabel = null,
+        $disabled = false
     )
     {
         parent::__construct(
@@ -52,8 +54,23 @@ class Input extends AbstractForm
             $isAppend,
             $class,
             $addClass,
-            $addGroupClass
+            $addGroupClass,
+            $row,
+            $classLabel,
+            $disabled
         );
+
+        // don't group field if is an hidden input
+        if ($this->type === 'hidden') {
+            $this->isInputGroup = false;
+        }
+
+        if ($this->type === 'radio' || $this->type ===  'checkbox') {
+            $this->isInputGroup = false;
+            $this->class = 'form-check-input';
+            $this->classLabel = 'form-check-label';
+            $this->addClass = '';
+        }
     }
 
     /**

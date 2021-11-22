@@ -7,12 +7,14 @@
 - name: Name of the field  
 - value: value of the field   
 - placeholder: Placeholder of the field.
-- isInputGroup: true ([see](https://getbootstrap.com/docs/4.0/components/input-group/ "see"))
+- isInputGroup: Display field on group field, true ([see](https://getbootstrap.com/docs/4.0/components/input-group/ "see"))
 - isPrepend: if isInputGroup is true, true by default.  
 - isAppend: if isInputGroup is true, false by default.  
 - class: class of the field, form-control by default.  
 - addClass: Allow add classes to the field  
 - addGroupClass: Allow add classes to the group fields, see the configuration file components.sizing-form.  
+- row: if true, display the label and the field on a row, isInputGroup must be set to false
+- disabled: if true, disabled the field
 
 ## Select
 ###### Attributes
@@ -50,3 +52,6 @@
 - addClass: Allow add classes to the field
 - addGroupClass: Allow add classes to the group fields, see the configuration file components.sizing-form.  
 - => slot : Content of the textarea
+
+## Styling
+see config/kick-starter.php  

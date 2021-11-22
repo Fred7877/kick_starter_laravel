@@ -1,5 +1,5 @@
 <div>
     <a href="#">
-        <i class="fas fa-times-circle" wire:click="$emitSelf('remove')"></i>
+        <i class="{{ config()->get('kick-starter.styles.actions.remove') }}" wire:click="$emitSelf('remove')"></i>
     </a>
 </div>
