@@ -22,8 +22,6 @@
 
                 <x-forms.input type="password" label="{{ __('common.password_confirmation') }}" name="password_confirmation"></x-forms.input>
 
-                <x-forms.input type="hidden" name="id" value="{{ $user->id }}"></x-forms.input>
-
                 <x-forms.select
                     name="roles"
                     multiple="true"
@@ -35,7 +33,7 @@
                     moveAllLabel="Tout déplacer"
                     removeAllLabel="Tout retirer"></x-forms.select>
 
-                <x-return-and-submit-btns redirectPath="{{ route('users.index') }}"></x-return-and-submit-btns>
+                <x-return-and-submit-btns redirectPath="{{ route('users.index', ['id' => $user->id]) }}"></x-return-and-submit-btns>
             </form>
         </div>
     </div>

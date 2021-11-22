@@ -3,9 +3,10 @@
 
 namespace App\View\Components\Forms;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\View\Component;
 
-Abstract class AbstractForm extends Component
+abstract class AbstractForm extends Component
 {
     /**
      *
@@ -62,6 +63,23 @@ Abstract class AbstractForm extends Component
     public $isAppend;
 
     /**
+     *
+     * @var boolean
+     */
+    public $row;
+
+    /**
+     *
+     * @var boolean
+     */
+    public $disabled;
+
+    /**
+     * @var string
+     */
+    public $classLabel;
+
+    /**
      * Create a new component instance.
      *
      * @return void
@@ -73,36 +91,74 @@ Abstract class AbstractForm extends Component
         $type = 'text',
         $value = '',
         $placeholder = '',
-        $isInputGroup = true,
-        $isPrepend = true,
-        $isAppend = false,
-        $class = 'form-control',
+        $isInputGroup = null,
+        $isPrepend = null,
+        $isAppend = null,
+        $class = '',
         $addClass = '',
-        $addGroupClass = ''
+        $addGroupClass = '',
+        $row = null,
+        $classLabel = null,
+        $disabled = false
     )
     {
         $this->type = $type;
         $this->label = $label;
         $this->name = $name;
         $this->value = $value;
-        $this->isInputGroup = filter_var($isInputGroup, FILTER_VALIDATE_BOOLEAN);
-        $this->isPrepend = filter_var($isPrepend, FILTER_VALIDATE_BOOLEAN);
-        $this->isAppend = filter_var($isAppend, FILTER_VALIDATE_BOOLEAN);
         $this->id = $id;
         $this->placeholder = $placeholder;
-        $this->class = $class;
         $this->addClass = $addClass;
         $this->addGroupClass = $addGroupClass;
+        $this->disabled = $disabled;
 
-        // don't field group field is an hidden input
-        if($this->type === 'hidden'){
-            $this->isInputGroup = false;
+        if ($isInputGroup !== null) {
+            $this->isInputGroup = filter_var($isInputGroup, FILTER_VALIDATE_BOOLEAN);
+        } else {
+            $this->isInputGroup = Config::get('kick-starter.styles.components.input.isInputGroup');
+        }
+
+        if(!$this->isInputGroup) {
+            if ($row !== null) {
+                $this->row = $row;
+            } else {
+                $this->row = Config::get('kick-starter.styles.components.input.row');
+            }
+        } else {
+            $this->row = $row;
+        }
+
+        if ($isPrepend !== null) {
+            $this->isPrepend = filter_var($isPrepend, FILTER_VALIDATE_BOOLEAN);
+        } else {
+            $this->isPrepend = Config::get('kick-starter.styles.components.input.isPrepend');
+        }
+
+        if ($isAppend !== null) {
+            $this->isAppend = filter_var($isAppend, FILTER_VALIDATE_BOOLEAN);
+        } else {
+            $this->isAppend = Config::get('kick-starter.styles.components.input.isAppend');
+        }
+
+        if ($class !== '') {
+            $this->class = $class;
+        } else {
+            $this->class = Config::get('kick-starter.styles.components.input.class');
+        }
+
+        if ($classLabel !== null) {
+            $this->classLabel = $classLabel;
+        } else {
+            $this->classLabel = Config::get('kick-starter.styles.components.input.classLabel');
         }
 
         $this->sizingForm();
     }
 
-    public function render() {}
+    public function render()
+    {
+    }
+
     protected abstract function sizingForm();
 
 }
