@@ -7,7 +7,7 @@
 @section('content_admin')
     <div class="card">
         <div class="card-body">
-            <x-new-btn route="{{ route('$CLASS_NAME_PLURAL$.create') }}"/></x-new-btn>
+            <x-new-btn route="{{ route('$CLASS_NAME_PLURAL$.create') }}"></x-new-btn>
             {{$dataTable->table()}}
         </div>
     </div>

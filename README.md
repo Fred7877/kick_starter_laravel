@@ -45,6 +45,16 @@ make permet aussi de démarrer ou stopper docker
 
 ------------
 
+## Commandes
+En lançant la commande Laravel  
+`php artisan make:model -mfsRr`  
+Les fichiers de migration, factory, seeder, request et un controller resource seront créer
+
+La commande  
+`php artisan generate:base:files`  
+Cette commande se base sur les models présent dans le répertoire app/Models et permet de générer les fichiers de base, DataTable, les vues edit et index.
+
+
 ## Setup
 Ajouté ces variables d'environnements au .env
 
@@ -61,6 +71,6 @@ Par default, 2 de groupes de permissions existe déjà, Users et Permissions.
 Ces 2 groupes possède toutes les permissions.
 
 ## Groupe permission
-Pour créer une nouvelle page, il suffit d'entendre le template principal layouts.admin  
+Pour créer une nouvelle page, il suffit d'étendre le template principal layouts.admin  
 
 

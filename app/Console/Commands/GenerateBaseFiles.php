@@ -37,7 +37,7 @@ class GenerateBaseFiles extends Command
      *
      * @var string
      */
-    protected $description = 'This command generate views and datatable files';
+    protected $description = 'This command generate views and datatable files with the models';
 
     /**
      * Create a new command instance.
@@ -65,7 +65,6 @@ class GenerateBaseFiles extends Command
 
         collect($this->files->allFiles(app_path('Models/')))->each(function ($file) use ($directories) {
             $className = $file->getBasename('.php');
-
 
             $this->generateCrudViews($className);
             $this->generateDataTableClass($className);
@@ -168,7 +167,7 @@ class GenerateBaseFiles extends Command
     {
         $stub = $this->getStubs('datatable');
         $content = $this->getStubContents($stub, [
-            'CLASS_NAME' => $className,
+            'CLASS_NAME' => $className.'DataTable',
             'ID_TABLE' => Str::plural(Str::lower($className)),
         ]);
 
