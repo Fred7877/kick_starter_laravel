@@ -240,12 +240,6 @@ return [
 
         ['header' => 'administration'],
         [
-            'text' => 'pommes',
-            'route' => 'pommes.index',
-            'icon' => 'fas fa-fw fa-users',
-            'active' => ['admin/pommes*'],
-        ],
-        [
             'text' => 'users',
             'route' => 'users.index',
             'icon' => 'fas fa-fw fa-users',

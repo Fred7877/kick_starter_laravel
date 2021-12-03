@@ -25,7 +25,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('users', UserController::class);
 
 
-    Route::resource('pommes', PommeController::class);
+    Route::resource('bananes', \App\Http\Controllers\Admin\BananeController::class);
+    Route::resource('poireaus', \App\Http\Controllers\Admin\PoireauController::class);
+    Route::resource('figues', \App\Http\Controllers\Admin\FigueController::class);
 
     Route::resource('roles-and-permissions', RoleAndPersmissionController::class);
 
