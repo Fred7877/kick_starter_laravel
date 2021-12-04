@@ -1,0 +1,100 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\DataTables\$DATATABLE_CLASSNAME$;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\$CLASS_NAME$;
+
+class $CLASS_NAME$Controller extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index($DATATABLE_CLASSNAME$ $dataTable)
+    {
+        return $dataTable->render('admin.$LOWERCASE_MODEL_NAME$.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('admin.$LOWERCASE_MODEL_NAME$.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Routing\Redirector
+     */
+    public function store(Request $request)
+    {
+        $$LOWERCASE_MODEL_NAME$ = $CLASS_NAME$::create(
+            [
+$PROPERTIES$
+            ]
+        );
+
+        return redirect(route('$LOWERCASE_MODEL_NAME$s.edit', ['$LOWERCASE_MODEL_NAME$' => $$LOWERCASE_MODEL_NAME$]))->with('success', __('common.create_successful'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($CLASS_NAME$ $$LOWERCASE_MODEL_NAME$)
+    {
+        return view('admin.$LOWERCASE_MODEL_NAME$.show', ['$LOWERCASE_MODEL_NAME$' => $$LOWERCASE_MODEL_NAME$]);
+    }
+
+   /**
+    * Show the form for editing the specified resource.
+    *
+    * @param $CLASS_NAME$ $$LOWERCASE_MODEL_NAME$
+    * @return \Illuminate\Contracts\View\View
+    */
+   public function edit($CLASS_NAME$ $$LOWERCASE_MODEL_NAME$)
+   {
+
+       return view('admin.$LOWERCASE_MODEL_NAME$.edit', ['$LOWERCASE_MODEL_NAME$' => $$LOWERCASE_MODEL_NAME$]);
+   }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param $CLASS_NAME$ $$LOWERCASE_MODEL_NAME$
+     * @return \Illuminate\Routing\Redirector
+     */
+    public function update(Request $request, $CLASS_NAME$ $$LOWERCASE_MODEL_NAME$)
+    {
+        $$LOWERCASE_MODEL_NAME$->update(
+            [
+$PROPERTIES$
+            ]
+        );
+
+       return redirect(route('$LOWERCASE_MODEL_NAME$s.edit', ['$LOWERCASE_MODEL_NAME$' => $$LOWERCASE_MODEL_NAME$]))->with('success', __('common.update_successful'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

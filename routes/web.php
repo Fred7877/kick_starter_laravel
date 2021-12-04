@@ -26,6 +26,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::resource('users', UserController::class);
     Route::resource('roles-and-permissions', RoleAndPersmissionController::class);
 
+    Route::resource('bananes', BananeController::class);
+
     Route::get('/', function () {
         return view('layouts.admin');
     })->name('home');

@@ -15,4 +15,9 @@ return [
     'success_deleting_user' => 'User removed successfully',
     'error_deleting_user' => 'Cannot removed this user',
     'ask_remove_user' => 'Are you sure you want to remove this user?',
+    'success_deleting' => 'Remove successfully',
+    'error_deleting' => 'Cannot removed',
+    'ask_remove' => 'Are you sure you want to remove?',
+    'update_successful' => 'Update successful !',
+    'create_successful' => 'Create réussi !',
 ];

@@ -22,7 +22,7 @@ class RemoveBtn extends Component
     public function confirmed()
     {
         $model = $this->modelType::find($this->modelId);
-        if($this->checking($model)) {
+        if ($this->checking($model)) {
             $model->delete();
             $this->flash('success', $this->messageModalSuccess, [], $this->routeRedirect);
         } else {
@@ -38,11 +38,12 @@ class RemoveBtn extends Component
      */
     private function checking($model)
     {
-        if($model instanceof User) {
-            return !$model->isAdministrator();
+        $checking = true;
+        if ($model instanceof User) {
+            $checking = !$model->isAdministrator() && User::role($model->name)->get()->isEmpty();
         }
 
-        return User::role($model->name)->get()->isEmpty();
+        return $checking;
     }
 
     public function remove()

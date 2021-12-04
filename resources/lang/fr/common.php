@@ -15,4 +15,9 @@ return [
     'success_deleting_user' => 'Utilisateur supprimé avec succès',
     'error_deleting_user' => 'Impossible de supprimer cet utilisateur',
     'ask_remove_user' => 'Etes-vous sûr de vouloir supprimer cet utilisateur ?',
+    'success_deleting' => 'Suppression réussie',
+    'error_deleting' => 'Impossible à supprimer',
+    'ask_remove' => 'Etes-vous sûr de vouloir supprimer ?',
+    'update_successful' => 'Mise à jour réussie !',
+    'create_successful' => 'Création réussi !',
 ];

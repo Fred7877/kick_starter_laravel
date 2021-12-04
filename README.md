@@ -29,6 +29,15 @@ make permet aussi de démarrer ou stopper docker
 `make start`  
 `make stop`
 
+# Usage
+Utiliser la commande  
+`php generate:base:files {className}`  
+Cette commande génère les fichiers migration, factory, seeder et un controller resource, ainsi que le fichier vue index.   
+Dans le fichier de migration créé, il faudra implémenter les colonnes néccessaire au model, puis, lancer la commande  
+`php artisan generate:crud:forms`  
+Cette commande se base sur les models présent dans le répertoire app/Models et permet de générer les fichiers les vues edit et create.  
+Si les fichiers existe déjà, ils ne seront pas recréés, il faut les supprimer pour les refaire si besoin.
+
 # Packages contenu dans le kick starter
 [Adminlte-3](https://github.com/jeroennoten/Laravel-AdminLTE/wiki "Adminlte-3")  
 *Bootstap v4*  
@@ -44,16 +53,6 @@ make permet aussi de démarrer ou stopper docker
 [Livewire](https://laravel-livewire.com/docs/2.x/quickstart "Livewire")  
 
 ------------
-
-## Commandes
-En lançant la commande Laravel  
-`php artisan make:model -mfsRr`  
-Les fichiers de migration, factory, seeder, request et un controller resource seront créer
-
-La commande  
-`php artisan generate:base:files`  
-Cette commande se base sur les models présent dans le répertoire app/Models et permet de générer les fichiers de base, DataTable, les vues edit et index.
-
 
 ## Setup
 Ajouté ces variables d'environnements au .env
