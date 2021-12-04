@@ -23,9 +23,9 @@ class $CLASS_NAME$DataTable extends DataTable
                     'route' => route('$ROUTE_NAME$s.edit', $model->id),
                     'modelId' => $model->id,
                     'modelType' => get_class($model),
-                    'messageModalSuccess' => __('common.success_deleting_role'),
-                    'messageModalError' => __('common.error_deleting_role'),
-                    'messageModalAsk' => __('common.ask_remove_role'),
+                    'messageModalSuccess' => __('common.success_deleting'),
+                    'messageModalError' => __('common.error_deleting'),
+                    'messageModalAsk' => __('common.ask_remove'),
                 ]);
             });
     }
