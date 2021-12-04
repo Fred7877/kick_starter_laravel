@@ -240,12 +240,6 @@ return [
 
         ['header' => 'administration'],
         [
-            'text' => 'Bananes',
-            'route' => 'bananes.index',
-            'icon' => 'fas fa-fw fa-users',
-            'active' => ['admin/bananes*'],
-        ],
-        [
             'text' => 'users',
             'route' => 'users.index',
             'icon' => 'fas fa-fw fa-users',
