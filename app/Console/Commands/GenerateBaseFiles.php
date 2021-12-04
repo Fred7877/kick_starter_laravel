@@ -59,6 +59,7 @@ class GenerateBaseFiles extends Command
      */
     public function handle()
     {
+
         $directories = collect($this->files->directories($this->pathViewDirectory))->map(function ($directory) {
             return Str::afterLast($directory, '/');
         })->toArray();
@@ -132,6 +133,7 @@ class GenerateBaseFiles extends Command
                 'string' => "<x-forms.input type='text' label='$label' id='$name' name='$name' value=\"{{ old('$name', $$classNameLower->$name) }}\"></x-forms.input>",
                 'text' => "<x-forms.text-area type='text' label='$label' id='$name' name='$name'>{{old('$name', $$classNameLower->$name) }}</x-forms.text-area>",
                 'date' => "<x-forms.input type='date' label='$label' id='$name' name='$name' value=\"{{ old('$name', $$classNameLower->$name) }}\"></x-forms.input>",
+                'integer' => "<x-forms.input type='number' label='$label' id='$name' name='$name' value=\"{{ old('$name', $$classNameLower->$name) }}\"></x-forms.input>",
                 $this->isForeignKey($name, $type) => "<x-forms.select name='" . Str::camel($name) . "' ></x-forms.select>",
                 default => null,
             };
@@ -159,6 +161,7 @@ class GenerateBaseFiles extends Command
                 'string' => "<x-forms.input type='text' label='$label' id='$name' name='$name' value=\"{{ old('$name') }}\"></x-forms.input>",
                 'text' => "<x-forms.text-area type='text' label='$label' id='$name' name='$name'>{{old('$name') }}</x-forms.text-area>",
                 'date' => "<x-forms.input type='date' label='$label' id='$name' name='$name' value=\"{{ old('$name') }}\"></x-forms.input>",
+                'integer' => "<x-forms.input type='number' label='$label' id='$name' name='$name' value=\"{{ old('$name') }}\"></x-forms.input>",
                 $this->isForeignKey($name, $type) => "<x-forms.select name='" . Str::camel($name) . "' ></x-forms.select>",
                 default => null,
             };
@@ -202,13 +205,26 @@ class GenerateBaseFiles extends Command
     {
         $stub = $this->getStubs('datatable');
         $content = $this->getStubContents($stub, [
-            'CLASS_NAME' => $className . 'DataTable',
+            'CLASS_NAME' => $className,
+            'ROUTE_NAME' => Str::lower($className),
             'ID_TABLE' => Str::plural(Str::lower($className)),
+            'COLUMNS' => $this->generateColumnsDatatable($className),
         ]);
 
         if (!file_exists($this->pathDataTableDirectory . "/{$className}DataTable.php")) {
             $this->files->put($this->pathDataTableDirectory . "/{$className}DataTable.php", $content);
         }
+    }
+
+    /**
+     * @param string $className
+     * @return \Illuminate\Support\Collection
+     */
+    private function generateColumnsDatatable(string $className)
+    {
+        return $this->getColumns($className)->map(function($type, $name) {
+                return "\t\t\tColumn::make('$name')";
+        })->flatten()->implode(",\n");
     }
 
     /**

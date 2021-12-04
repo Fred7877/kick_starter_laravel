@@ -4,8 +4,9 @@ namespace App\DataTables;
 
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
+use App\Models\$CLASS_NAME$;
 
-class $CLASS_NAME$ extends DataTable
+class $CLASS_NAME$DataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,7 +20,7 @@ class $CLASS_NAME$ extends DataTable
             ->eloquent($query)
             ->addColumn('actions', function ($model) {
                 return view('layouts.datatable-actions-btn', [
-                    'route' => route('$CLASS_NAME$s.edit', $model->id),
+                    'route' => route('$ROUTE_NAME$s.edit', $model->id),
                     'modelId' => $model->id,
                     'modelType' => get_class($model),
                     'messageModalSuccess' => __('common.success_deleting_role'),
@@ -71,7 +72,7 @@ class $CLASS_NAME$ extends DataTable
     protected function getColumns()
     {
         return [
-
+$COLUMNS$
         ];
     }
 
