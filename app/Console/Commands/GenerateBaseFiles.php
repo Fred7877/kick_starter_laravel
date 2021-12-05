@@ -14,8 +14,7 @@ class GenerateBaseFiles extends AbstractGenerateCommand
      *
      * @var string
      */
-    protected $signature = 'generate:base:files
-                            {className : The name class}';
+    protected $signature = 'generate:base:files {className : The name class} {--o|overwrite : overwrite the models and controller}';
 
     /**
      * Filesystem instance
@@ -44,6 +43,13 @@ class GenerateBaseFiles extends AbstractGenerateCommand
     protected $pathModelDirectory;
 
     /**
+     * @var string
+     */
+    protected $pathMigrationDirectory;
+
+    protected $overwrite = false;
+
+    /**
      * The console command description.
      *
      * @var string
@@ -64,6 +70,7 @@ class GenerateBaseFiles extends AbstractGenerateCommand
         $this->pathDataTableDirectory = app_path('DataTables');
         $this->pathControllerDirectory = app_path('Http/Controllers/Admin');
         $this->pathModelDirectory = app_path('Models');
+        $this->pathMigrationDirectory = app_path('../database/migrations');
     }
 
     /**
@@ -74,6 +81,13 @@ class GenerateBaseFiles extends AbstractGenerateCommand
     public function handle()
     {
         $this->className = $this->argument('className');
+        $this->overwrite = $this->option('overwrite');
+
+        if ($this->overwrite) {
+            if (!$this->confirm('The overwrite option is true, the model and controller will be overwritten; continue?')) {
+                return Command::INVALID;
+            }
+        }
 
         $this->generateController();
         $this->generateModelFactorySeeder();
@@ -84,14 +98,29 @@ class GenerateBaseFiles extends AbstractGenerateCommand
     }
 
     /**
-     * Generate the model, factory and seeder files.
+     * Check if a migration with className is exists.
+     * @return bool
+     */
+    private function isMigrationPresent()
+    {
+        return collect($this->files->allFiles($this->pathMigrationDirectory))->map(function ($file) {
+            if (Str::contains($file, Str::of($this->className)->lower()->plural())) {
+                return true;
+            }
+
+            return false;
+        })->contains(true);
+    }
+
+    /**
+     * Generate the migration, model, factory and seeder files.
      */
     private function generateModelFactorySeeder()
     {
 
-        $file = $this->pathModelDirectory . '/' . Str::ucfirst($this->className).'.php';
+        $file = $this->pathModelDirectory . '/' . Str::ucfirst($this->className) . '.php';
 
-        if (!$this->files->exists($file)) {
+        if (!$this->files->exists($file) || $this->overwrite) {
             $stub = $this->getStubs('model');
             $content = $this->getStubContents($stub, [
                 'CLASS_NAME' => Str::ucfirst($this->className),
@@ -100,14 +129,17 @@ class GenerateBaseFiles extends AbstractGenerateCommand
             $this->files->put($file, $content);
             $this->info('Model created successfully.');
         } else {
-            $this->info(Str::ucfirst($this->className).' Model is already exists.');
+            $this->info(Str::ucfirst($this->className) . ' Model is already exists.');
         }
 
-        Artisan::call('make:migration create_'.Str::lower($this->className).'s_table');
+        if (!$this->isMigrationPresent()) {
+            Artisan::call('make:migration create_' . Str::of($this->className)->lower()->plural() . '_table');
+            $this->info(Artisan::output());
+        }
+
+        Artisan::call('make:factory ' . Str::ucfirst($this->className) . 'Factory');
         $this->info(Artisan::output());
-        Artisan::call('make:factory ' . Str::ucfirst($this->className).'Factory');
-        $this->info(Artisan::output());
-        Artisan::call('make:seeder ' . Str::ucfirst($this->className).'Seeder');
+        Artisan::call('make:seeder ' . Str::ucfirst($this->className) . 'Seeder');
         $this->info(Artisan::output());
     }
 
@@ -116,9 +148,9 @@ class GenerateBaseFiles extends AbstractGenerateCommand
      */
     private function generateController()
     {
-        $file = $this->pathControllerDirectory . '/' . Str::ucfirst($this->className).'Controller.php';
+        $file = $this->pathControllerDirectory . '/' . Str::ucfirst($this->className) . 'Controller.php';
 
-        if (!$this->files->exists($file)) {
+        if (!$this->files->exists($file) || $this->overwrite) {
             $stub = $this->getStubs('controller');
             $content = $this->getStubContents($stub, [
                 'CLASS_NAME' => Str::ucfirst($this->className),
@@ -141,7 +173,7 @@ class GenerateBaseFiles extends AbstractGenerateCommand
     private function generateInsertProperties()
     {
         return $this->getColumns()->map(function ($type, $name) {
-            if(!in_array($name, ['id', 'created_at', 'updated_at'])) {
+            if (!in_array($name, ['id', 'created_at', 'updated_at'])) {
                 return "\t\t\t\t'$name'" . ' => $request->get(\'' . $name . '\')';
             }
             return null;
@@ -156,7 +188,7 @@ class GenerateBaseFiles extends AbstractGenerateCommand
     private function generateProperties()
     {
         return $this->getColumns()->map(function ($type, $name) {
-            if(!in_array($name, ['id', 'created_at', 'updated_at'])) {
+            if (!in_array($name, ['id', 'created_at', 'updated_at'])) {
                 return "\t\t'$name'";
             }
             return null;
@@ -207,7 +239,7 @@ class GenerateBaseFiles extends AbstractGenerateCommand
     private function generateColumnsDatatable()
     {
         return $this->getColumns()->map(function ($type, $name) {
-            return "\t\t\tColumn::make('$name')";
-        })->flatten()->implode(",\n").",\n\t\t\tColumn::computed('actions')";
+                return "\t\t\tColumn::make('$name')";
+            })->flatten()->implode(",\n") . ",\n\t\t\tColumn::computed('actions')";
     }
 }

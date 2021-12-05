@@ -30,12 +30,18 @@ make permet aussi de démarrer ou stopper docker
 `make stop`
 
 # Usage
-Utiliser la commande  
+Vous pouvez directement lancer la commande  
 `php generate:base:files {className}`  
 Cette commande génère les fichiers migration, factory, seeder et un controller resource, ainsi que le fichier vue index.   
-Dans le fichier de migration créé, il faudra implémenter les colonnes néccessaire au model, puis, lancer la commande  
+Dans le fichier de migration créé, il faudra implémenter les colonnes néccessaire au model puis lancer la migration.
+Une fois la migration faite, relancer la commande generate:base:files avec l'option -o, cala rajout les propriétées dans les tableaux($fillable, create()/update() dans le controller)
+
+Ou bien, créer un fichier de migration, le remplir puis lancer une migration et lancer la commande  
+`php generate:base:files {className} -o` 
+
+Si vous voulez les fichiers de vues, lancer  
 `php artisan generate:crud:forms`  
-Cette commande se base sur les models présent dans le répertoire app/Models et permet de générer les fichiers les vues edit et create.  
+Cette commande se base sur les models présent dans le répertoire app/Models et permet de générer les fichiers de vue edit et create.  
 Si les fichiers existe déjà, ils ne seront pas recréés, il faut les supprimer pour les refaire si besoin.
 
 # Packages contenu dans le kick starter
