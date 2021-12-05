@@ -50,7 +50,7 @@
                name="{{ $name }}"
                @if($disabled) disabled @endif
         >
-        <label class="{{ $classLabel }}" for="defaultCheck1">
+        <label class="{{ $classLabel }}" for="{{ $id }}">
             {{ $label }}
         </label>
     </div>
